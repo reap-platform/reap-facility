@@ -1,0 +1,17 @@
+spring: 
+  application:
+    name: reap-facility
+  cloud:
+    config:
+      name: reap,reap-facility
+      label: default
+      server: 
+        bootstrap: true
+        prefix: /config 
+    
+reap-config: 
+  datasource:  
+    url: ${REAP_CONFIG_DATASOURCE_URL:jdbc:h2:./REAP}
+    username: ${REAP_CONFIG_DATASOURCE_USERNAME:reap}
+    password: ${REAP_CONFIG_DATASOURCE_PASSWORD:reap}
+    driver-class-name: ${REAP_CONFIG_DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}

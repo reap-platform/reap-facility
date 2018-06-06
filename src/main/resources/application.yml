@@ -1,0 +1,19 @@
+eureka:
+  server:
+    enableSelfPreservation: false
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${REAP_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:http://localhost:8761/eureka/}
+  
+ribbon:
+  ReadTimeout: 120000
+  ConnectTimeout: 5000  
+
+apis:
+  token: http://reap-facility/apis/reap-portal/token
+  ignore:
+    - /apis/reap-portal/logon
+    - /apis/reap-portal/token
+    - /apis/reap-rbac/authentication
