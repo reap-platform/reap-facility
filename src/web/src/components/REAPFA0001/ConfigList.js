@@ -1,8 +1,17 @@
 import React from 'react'
-import { Row, Col, Table, Popconfirm, Input, Form, Button } from 'antd'
+import { Row, Col, Table, Popconfirm, Input, Form, Button, Card } from 'antd'
 import EditableCell from '../EditableCell'
 import FunctionForm from './ConfigForm'
-import styles from './ConfigList.less'
+
+const formItemLayout = {
+  labelCol: {
+    span: 6,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+}
+
 
 const Component = ({
   page, dispatch, showCreateModal, loading,
@@ -94,10 +103,10 @@ const Component = ({
   ]
 
   return (
-    <Col>
-      <Row gutter={12} className={styles.searchForm}>
-        <Col span={4}>
-          <Item label="归属系统">
+    <Card title="参数管理" bordered={false}>
+      <Row>
+        <Col md={6} sm={24}>
+          <Item label="归属系统" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -111,8 +120,8 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4}>
-          <Item label="环境">
+        <Col md={6} sm={24}>
+          <Item label="环境" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -126,8 +135,8 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4}>
-          <Item label="标签">
+        <Col md={6} sm={24}>
+          <Item label="标签" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -141,8 +150,10 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4}>
-          <Item label="参数名">
+      </Row>
+      <Row>
+        <Col md={6} sm={24}>
+          <Item label="参数名" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -156,8 +167,8 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4}>
-          <Item label="参数值">
+        <Col md={6} sm={24}>
+          <Item label="参数值" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -171,8 +182,8 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4} >
-          <Item>
+        <Col md={6} sm={24}>
+          <Item {...{ wrapperCol: { span: 16, push: 3 } }}>
             <Button
               type="primary"
               htmlType="button"
@@ -186,10 +197,10 @@ const Component = ({
           </Item>
         </Col>
       </Row>
-      <Col>
+      <Row>
         <FunctionForm showCreateModal={showCreateModal} dispatch={dispatch} />
-      </Col>
-      <Col>
+      </Row>
+      <Row>
         <Table dataSource={page && page.content}
           pagination={{
             total: page && page.totalElements,
@@ -201,8 +212,8 @@ const Component = ({
           loading={loading}
           bordered
         />
-      </Col>
-    </Col>
+      </Row>
+    </Card>
   )
 }
 export default Component

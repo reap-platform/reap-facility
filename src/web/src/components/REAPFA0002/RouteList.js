@@ -1,8 +1,16 @@
 import React from 'react'
-import { Row, Col, Table, Popconfirm, Input, Form, Button } from 'antd'
+import { Row, Col, Table, Popconfirm, Input, Form, Button, Card } from 'antd'
 import EditableCell from '../EditableCell'
 import FunctionForm from './RouteForm'
-import styles from './RouteList.less'
+
+const formItemLayout = {
+  labelCol: {
+    span: 6,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+}
 
 const Component = ({
   page, dispatch, showCreateModal, loading,
@@ -82,10 +90,10 @@ const Component = ({
   ]
 
   return (
-    <Col>
-      <Row gutter={12} className={styles.searchForm}>
-        <Col span={4}>
-          <Item label="路由名称">
+    <Card title="路由管理" bordered={false}>
+      <Row>
+        <Col md={6} sm={24}>
+          <Item label="路由名称" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -99,8 +107,8 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4}>
-          <Item label="路由规则">
+        <Col md={6} sm={24}>
+          <Item label="路由规则" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -114,8 +122,8 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4}>
-          <Item label="服务ID">
+        <Col md={6} sm={24}>
+          <Item label="服务ID" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -129,8 +137,10 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4}>
-          <Item label="转发地址">
+      </Row>
+      <Row>
+        <Col md={6} sm={24}>
+          <Item label="转发地址" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
@@ -144,8 +154,8 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col span={4} >
-          <Item>
+        <Col md={6} sm={24}>
+          <Item {...{ wrapperCol: { span: 16, push: 2 } }}>
             <Button
               type="primary"
               htmlType="button"
@@ -159,10 +169,10 @@ const Component = ({
           </Item>
         </Col>
       </Row>
-      <Col>
+      <Row>
         <FunctionForm showCreateModal={showCreateModal} dispatch={dispatch} />
-      </Col>
-      <Col>
+      </Row>
+      <Row>
         <Table dataSource={page && page.content}
           pagination={{
             total: page && page.totalElements,
@@ -174,8 +184,8 @@ const Component = ({
           loading={loading}
           bordered
         />
-      </Col>
-    </Col>
+      </Row>
+    </Card>
   )
 }
 export default Component
