@@ -42,7 +42,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 机构维护相关的服务.
  * 
@@ -55,13 +54,38 @@ public class ConfigController {
 	@Autowired
 	private ConfigRepository configRepository;
 
+	/**
+	 * @api {post} /config 创建参数
+	 * @apiName 创建参数
+	 * @apiGroup config
+	 * @apiParam {String} application 归属系统
+	 * @apiParam {String} profile 参数生效环境
+	 * @apiParam {String} label 参数标签
+	 * @apiParam {String} name 参数名
+	 * @apiParam {String} value 参数值
+	 * @apiSuccess {Boolean} success 业务成功标识 <code>true</code>
+	 * @apiSuccess {Object} responseCode 响应码 'SC0000'
+	 * @apiSuccess {Object} payload 响应数据
+	 * @apiSuccess {String} payload.id 新建参数 ID
+	 * @apiSuccess {String} payload.application 归属应用
+	 * @apiSuccess {String} payload.profile 参数生效环境
+	 * @apiSuccess {String} payload.label 参数标签
+	 * @apiSuccess {String} payload.name 参数名
+	 * @apiSuccess {String} payload.value 参数值
+	 * @apiErrorExample {json} Error-Response: 
+	 * 
+	 *    { 
+	 *      "success": false, 
+	 *      "responseCode": "具体错误码", 
+	 *      "responseMessage": "具体错误消息" 
+	 *    }
+	 */
 	@RequestMapping(path = "/config", method = RequestMethod.POST)
 	public Result<Config> create(@RequestBody Config config) {
 		validate(config);
 		return DefaultResult.newResult(configRepository.save(config));
 	}
-	
-	
+
 	@RequestMapping(path = "/config/{id}", method = RequestMethod.DELETE)
 	public Result<?> delete(@PathVariable String id) {
 		configRepository.deleteById(id);
