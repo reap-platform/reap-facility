@@ -6,10 +6,9 @@
   "license": "MIT",
   "repository": "https://github.com/reap-platform/reap-facility",
   "apidoc": {
-    "name": "Reap Facility 服务接口文档",
-    "description": "reap-facility 对外提供的 RESTful接口",
-    "title": "REAP Facility APIS",
-    "url": "http://reap-facility/apidoc"
+    "name": "Reap Facility 服务接口",
+    "description": "",
+    "version": "0.0.1-SNAPSHOT"
   },
   "scripts": {
     "start": "roadhog server",
