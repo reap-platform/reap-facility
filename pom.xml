@@ -8,6 +8,31 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>reap-facility</artifactId>
+	<profiles>
+		<profile>
+			<id>Windows</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<properties>
+				<script.extension>.cmd</script.extension>
+			</properties>
+		</profile>
+		<profile>
+			<id>unix</id>
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+			<properties>
+				<script.extension>.sh</script.extension>
+			</properties>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.reap</groupId>
@@ -60,20 +85,20 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<executions>
-				<execution>
-                        <id>exec-npm-install</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm.cmd</executable>
-                            <arguments>
-                                <argument>install</argument>
-                            </arguments>
-                            <workingDirectory>${basedir}/src/web</workingDirectory>
-                        </configuration>
-                    </execution>
+					<execution>
+						<id>exec-npm-install</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm${script.extension}</executable>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+							<workingDirectory>${basedir}/src/web</workingDirectory>
+						</configuration>
+					</execution>
 					<execution>
 						<id>exec-npm-build</id>
 						<phase>prepare-package</phase>
@@ -81,29 +106,29 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>npm.cmd</executable>
+							<executable>npm${script.extension}</executable>
 							<arguments>
-							    <argument>run</argument>
+								<argument>run</argument>
 								<argument>build-with-app</argument>
 							</arguments>
 							<workingDirectory>${basedir}/src/web</workingDirectory>
 						</configuration>
 					</execution>
 					<execution>
-                        <id>exec-generate-apidoc</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm.cmd</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>generate-apidoc</argument>
-                            </arguments>
-                            <workingDirectory>${basedir}/src/web</workingDirectory>
-                        </configuration>
-                    </execution>
+						<id>exec-generate-apidoc</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm${script.extension}</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>generate-apidoc</argument>
+							</arguments>
+							<workingDirectory>${basedir}/src/web</workingDirectory>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>

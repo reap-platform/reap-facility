@@ -57,28 +57,24 @@ public class ConfigController {
 	/**
 	 * @api {post} /config 创建参数
 	 * @apiName 创建参数
-	 * @apiGroup config
+	 * @apiGroup Config
 	 * @apiParam {String} application 归属系统
 	 * @apiParam {String} profile 参数生效环境
 	 * @apiParam {String} label 参数标签
 	 * @apiParam {String} name 参数名
 	 * @apiParam {String} value 参数值
 	 * @apiSuccess {Boolean} success 业务成功标识 <code>true</code>
-	 * @apiSuccess {Object} responseCode 响应码 'SC0000'
+	 * @apiSuccess {String} responseCode 响应码 'SC0000'
 	 * @apiSuccess {Object} payload 响应数据
-	 * @apiSuccess {String} payload.id 新建参数 ID
+	 * @apiSuccess {String} payload.id 新建参数 id
 	 * @apiSuccess {String} payload.application 归属应用
 	 * @apiSuccess {String} payload.profile 参数生效环境
 	 * @apiSuccess {String} payload.label 参数标签
 	 * @apiSuccess {String} payload.name 参数名
 	 * @apiSuccess {String} payload.value 参数值
-	 * @apiErrorExample {json} Error-Response: 
-	 * 
-	 *    { 
-	 *      "success": false, 
-	 *      "responseCode": "具体错误码", 
-	 *      "responseMessage": "具体错误消息" 
-	 *    }
+	 * @apiError {Boolean} success 业务成功标识 <code>false</code>
+	 * @apiError {String} responseCode 错误码
+	 * @apiError {String} responseMessage 错误消息
 	 */
 	@RequestMapping(path = "/config", method = RequestMethod.POST)
 	public Result<Config> create(@RequestBody Config config) {
@@ -86,12 +82,45 @@ public class ConfigController {
 		return DefaultResult.newResult(configRepository.save(config));
 	}
 
+	/**
+	 * @api {delete} /config/:id 删除指定 id 的参数
+	 * @apiName 删除参数
+	 * @apiGroup Config
+	 * @apiParam {String} id 参数 id
+	 * @apiSuccess {Boolean} success 业务成功标识 <code>true</code>
+	 * @apiSuccess {String} responseCode 响应码 'SC0000'
+	 * @apiError {String} responseCode 错误码
+	 * @apiError {String} responseMessage 错误消息
+	 */
 	@RequestMapping(path = "/config/{id}", method = RequestMethod.DELETE)
 	public Result<?> delete(@PathVariable String id) {
 		configRepository.deleteById(id);
 		return DefaultResult.newResult();
 	}
 
+	/**
+	 * @api {put} /config 更新参数信息
+	 * @apiName 更新参数
+	 * @apiGroup Config
+	 * @apiParam {String} id 参数 id
+	 * @apiParam {String} application 归属系统
+	 * @apiParam {String} profile 参数生效环境
+	 * @apiParam {String} label 参数标签
+	 * @apiParam {String} name 参数名
+	 * @apiParam {String} value 参数值
+	 * @apiSuccess {Boolean} success 成功标识 <code>true</code>
+	 * @apiSuccess {String} responseCode 响应码 'SC0000'
+	 * @apiSuccess {Object} payload 响应数据
+	 * @apiSuccess {String} payload.id 参数 id
+	 * @apiSuccess {String} payload.application 归属应用
+	 * @apiSuccess {String} payload.profile 参数生效环境
+	 * @apiSuccess {String} payload.label 参数标签
+	 * @apiSuccess {String} payload.name 参数名
+	 * @apiSuccess {String} payload.value 参数值
+	 * @apiError {Boolean} success 业务成功标识 <code>false</code>
+	 * @apiError {String} responseCode 错误码
+	 * @apiError {String} responseMessage 错误消息
+	 */
 	@RequestMapping(path = "/config", method = RequestMethod.PUT)
 	public Result<Config> update(@RequestBody Config config) {
 		Config persisted = FunctionalUtils.orElseThrow(configRepository.findById(config.getId()),
@@ -104,6 +133,34 @@ public class ConfigController {
 		return DefaultResult.newResult(configRepository.save(persisted));
 	}
 
+	/**
+	 * @api {get} /configs 分页查询参数
+	 * @apiName 查询参数
+	 * @apiGroup Config
+	 * @apiParam {Number} [page=0] 页码
+	 * @apiParam {Number} [size=10] 每页记录数
+	 * @apiParam {String} [application] 归属应用，模糊匹配
+	 * @apiParam {String} [profile] 归属环境，模糊匹配
+	 * @apiParam {String} [label] 参数标签，模糊匹配
+	 * @apiParam {String} [name] 参数名，模糊匹配
+	 * @apiParam {String} [value] 参数值，模糊匹配
+	 * @apiSuccess {Boolean} success 成功标识 <code>true</code>
+	 * @apiSuccess {String} responseCode 响应码 'SC0000'
+	 * @apiSuccess {Object} payload 响应数据
+	 * @apiSuccess {Number} payload.totalPages 总页数
+	 * @apiSuccess {Number} payload.totalElements 总记录数
+	 * @apiSuccess {Number} payload.numberOfElements 当前记录数
+	 * @apiSuccess {Object[]} payload.content 参数标签
+	 * @apiSuccess {String} payload.content.id 参数 id
+	 * @apiSuccess {String} payload.content.application 归属应用
+	 * @apiSuccess {String} payload.content.profile 参数生效环境
+	 * @apiSuccess {String} payload.content.label 参数标签
+	 * @apiSuccess {String} payload.content.name 参数名
+	 * @apiSuccess {String} payload.content.value 参数值
+	 * @apiError {Boolean} success 业务成功标识 <code>false</code>
+	 * @apiError {String} responseCode 错误码
+	 * @apiError {String} responseMessage 错误消息
+	 */
 	@RequestMapping(path = "/configs", method = RequestMethod.GET)
 	public Result<Page<Config>> find(@RequestParam(defaultValue = Constants.DEFAULT_PAGE_NUMBER) int page,
 			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, QueryConfigSpec spec) {
