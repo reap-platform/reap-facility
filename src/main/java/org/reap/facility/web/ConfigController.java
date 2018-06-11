@@ -89,7 +89,7 @@ public class ConfigController {
 	}
 
 	/**
-	 * @api {delete} /config/:id 删除参数
+	 * @api {delete} /config/{id} 删除参数
 	 * @apiName deleteConfig
 	 * @apiGroup Config
 	 * @apiParam (PathVariable) {String} id 参数 id

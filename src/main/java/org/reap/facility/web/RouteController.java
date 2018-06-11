@@ -86,7 +86,7 @@ public class RouteController {
 	}
 
 	/**
-	 * @api {delete} /route/:id 删除路由
+	 * @api {delete} /route/{id} 删除路由
 	 * @apiName deleteRoute
 	 * @apiGroup Route
 	 * @apiParam (PathVariable) {String} id 参数 id
