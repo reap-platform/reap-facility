@@ -55,10 +55,6 @@ public class RouteController {
 	private RouteRepository routeRepository;
 
 	/** @apiDefine Route 路由维护 */
-	/** @apiDefine createRoute 创建路由 */
-	/** @apiDefine deleteRoute 删除路由 */
-	/** @apiDefine queryRoute 查询路由 */
-	/** @apiDefine updateRoute 修改路由*/
 
 	/**
 	 * @api {post} /route 创建路由

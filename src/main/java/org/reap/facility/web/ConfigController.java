@@ -55,10 +55,6 @@ public class ConfigController {
 	private ConfigRepository configRepository;
 
 	/** @apiDefine Config 参数维护 */
-	/** @apiDefine createConfig 创建参数 */
-	/** @apiDefine deleteConfig 删除参数 */
-	/** @apiDefine queryConfig 查询参数 */
-	/** @apiDefine updateConfig 修改参数 */
 
 	/**
 	 * @api {post} /config 创建参数
