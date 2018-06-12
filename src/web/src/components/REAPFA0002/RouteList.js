@@ -43,6 +43,7 @@ const Component = ({
       key: 'path',
       render: (text, record) => (
         <EditableCell
+          length={30}
           value={text}
           onChange={onCellChange(record.id, 'path')}
         />
@@ -67,6 +68,7 @@ const Component = ({
       key: 'url',
       render: (text, record) => (
         <EditableCell
+          length={50}
           value={text}
           onChange={onCellChange(record.id, 'url')}
         />

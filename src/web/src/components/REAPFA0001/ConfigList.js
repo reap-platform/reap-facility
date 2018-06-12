@@ -40,7 +40,7 @@ const Component = ({
     {
       title: '环境',
       dataIndex: 'profile',
-      width: '5%',
+      width: '10%',
       key: 'profile',
       render: (text, record) => (
         <EditableCell
@@ -68,6 +68,7 @@ const Component = ({
       key: 'name',
       render: (text, record) => (
         <EditableCell
+          length={50}
           value={text}
           onChange={onCellChange(record.id, 'name')}
         />
@@ -80,6 +81,7 @@ const Component = ({
       key: 'value',
       render: (text, record) => (
         <EditableCell
+          length={50}
           value={text}
           onChange={onCellChange(record.id, 'value')}
         />
@@ -87,7 +89,7 @@ const Component = ({
     },
     {
       title: '操作',
-      width: '5%',
+      width: '10%',
       dataIndex: 'operation',
       render: (text, record) => {
         return (

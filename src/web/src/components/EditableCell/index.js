@@ -1,5 +1,6 @@
 import React from 'react'
 import { Input, Icon } from 'antd'
+import Ellipsis from '../Ellipsis'
 import styles from './index.less'
 
 export default class EditableCell extends React.Component {
@@ -22,6 +23,7 @@ export default class EditableCell extends React.Component {
   }
   render () {
     const { value, editable } = this.state
+    const { length } = this.props
     return (
       <div className={styles.editableCell}>
         {editable ?
@@ -39,7 +41,9 @@ export default class EditableCell extends React.Component {
           </div>
             :
           <div className={styles.editableCellTextWrapper}>
-            {value || ' '}
+            {length ? (<Ellipsis length={length} tooltip>
+              {value || ' '}
+            </Ellipsis>) : (value || '')}
             <Icon
               type="edit"
               className={styles.editableCellIcon}
