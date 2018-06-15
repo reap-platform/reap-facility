@@ -12,7 +12,7 @@ ribbon:
   ConnectTimeout: 5000  
 
 apis:
-  token: http://reap-facility/apis/reap-portal/token
+  token: http://reap-portal/token
   ignore:
     - /apis/reap-portal/logon
     - /apis/reap-portal/token
