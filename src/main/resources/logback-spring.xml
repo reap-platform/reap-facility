@@ -1,56 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml" />
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}" />
+	<springProfile name="dev">
+		<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+		<root level="INFO">
+			<appender-ref ref="CONSOLE" />
+		</root>
+	</springProfile>
 
-    <springProfile name="dev">
-        <root level="DEBUG">
-            <appender-ref ref="CONSOLE" />
-        </root>
-    </springProfile>
-
-    <springProfile name="prd">
-        <springProperty scope="context" name="logstash.destinations"
-            source="reap.logging.logstash.destinations" />
-        <if condition='isDefined("logstash.destinations")'>
-            <then>
-                <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-                    <destination>${logstash.destinations}</destination>
-                    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-                        <providers>
-                            <timestamp>
-                                <timeZone>UTC</timeZone>
-                            </timestamp>
-                            <pattern>
-                                <pattern>
-                                    {
-                                    "severity": "%level",
-                                    "service": "${springAppName:-}",
-                                    "trace": "%X{X-B3-TraceId:-}",
-                                    "span":
-                                    "%X{X-B3-SpanId:-}",
-                                    "parent": "%X{X-B3-ParentSpanId:-}",
-                                    "exportable":
-                                    "%X{X-Span-Export:-}",
-                                    "pid": "${PID:-}",
-                                    "thread": "%thread",
-                                    "class": "%logger{40}",
-                                    "rest": "%message"
-                                    }
-                                </pattern>
-                            </pattern>
-                        </providers>
-                    </encoder>
-                </appender>
-                <root level="INFO">
-                    <appender-ref ref="LOGSTASH" />
-                    <appender-ref ref="FILE" />
-                </root>
-            </then>
-            <else>
-                <root level="INFO">
-                    <appender-ref ref="FILE" />
-                </root>
-            </else>
-        </if>
-    </springProfile>
+	<springProfile name="prd">
+		<springProperty scope="context" name="springAppName" source="spring.application.name" />
+		<springProperty scope="context" name="logstash.destinations"
+			source="reap.logging.logstash.destinations" />
+		<springProperty scope="context" name="logstash.writeBufferSize"
+			source="reap.logging.logstash.buffer.size" />
+		<include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+		<if condition='isDefined("logstash.destinations")'>
+			<then>
+				<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+					<destination>${logstash.destinations}</destination>
+					<writeBufferSize>${logstash.writeBufferSize}</writeBufferSize>
+					<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+						<providers>
+							<timestamp>
+								<timeZone>UTC</timeZone>
+							</timestamp>
+							<pattern>
+								<pattern>
+									{
+									"severity": "%level",
+									"service": "${springAppName:-}",
+									"trace": "%X{X-B3-TraceId:-}",
+									"span":
+									"%X{X-B3-SpanId:-}",
+									"parent": "%X{X-B3-ParentSpanId:-}",
+									"exportable":
+									"%X{X-Span-Export:-}",
+									"pid": "${PID:-}",
+									"thread": "%thread",
+									"class": "%logger{40}",
+									"rest": "%message"
+									}
+								</pattern>
+							</pattern>
+						</providers>
+					</encoder>
+				</appender>
+				<root level="INFO">
+					<appender-ref ref="LOGSTASH" />
+					<appender-ref ref="FILE" />
+				</root>
+			</then>
+			<else>
+				<root level="DEBUG">
+					<appender-ref ref="FILE" />
+				</root>
+			</else>
+		</if>
+	</springProfile>
 </configuration>
