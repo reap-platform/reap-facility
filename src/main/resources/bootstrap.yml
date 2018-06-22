@@ -11,7 +11,7 @@ spring:
     
 reap-config: 
   datasource:  
-    url: ${REAP_CONFIG_DATASOURCE_URL:jdbc:h2:tcp://localhost/../data/REAPDB}
+    url: ${REAP_CONFIG_DATASOURCE_URL:jdbc:h2:tcp://localhost/~/REAPDB}
     username: ${REAP_CONFIG_DATASOURCE_USERNAME:reap}
     password: ${REAP_CONFIG_DATASOURCE_PASSWORD:reap}
     driver-class-name: ${REAP_CONFIG_DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
