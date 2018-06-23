@@ -16,11 +16,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableZuulProxy
 public class Application {
 
-//	@Bean
-//	public TracingFilterPostProcessor tracingFilterPostProcessor(HttpTracing httpTracing) {
-//		return new TracingFilterPostProcessor(httpTracing);
-//	}
-
 	@Bean
 	@LoadBalanced
 	public RestTemplate restTemplate() {

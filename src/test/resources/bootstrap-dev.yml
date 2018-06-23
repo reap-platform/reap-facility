@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: reap-facility
+  cloud:
+    config:
+      enabled: false
+reap:
+  config:
+    enabled: false
+eureka: 
+  client:
+    enabled: false

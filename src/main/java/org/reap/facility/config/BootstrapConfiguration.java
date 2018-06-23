@@ -23,10 +23,9 @@
 
 package org.reap.facility.config;
 
-import javax.sql.DataSource;
-
 import org.reap.facility.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.cloud.config.server.environment.EnvironmentRepository;
 import org.springframework.cloud.config.server.environment.JdbcEnvironmentProperties;
@@ -42,6 +41,8 @@ import com.zaxxer.hikari.HikariDataSource;
  * @author 7cat
  * @since 1.0
  */
+// 单元测试时指定显式的设定  reap.config.enabled= false
+@ConditionalOnProperty(value = "reap.config.enabled", matchIfMissing = true)
 @Configuration
 public class BootstrapConfiguration {
 
@@ -49,17 +50,12 @@ public class BootstrapConfiguration {
 	private Environment environment;
 
 	@Bean
-	public DataSource dataSource() {
+	public EnvironmentRepository defaultEnvironmentRepository() {
 		HikariDataSource dataSource = (HikariDataSource) DataSourceBuilder.create().build();
 		dataSource.setJdbcUrl(environment.getProperty("reap-config.datasource.url"));
 		dataSource.setUsername(environment.getProperty("reap-config.datasource.username"));
 		dataSource.setPassword(environment.getProperty("reap-config.datasource.password"));
 		dataSource.setDriverClassName(environment.getProperty("reap-config.datasource.driver-class-name"));
-		return dataSource;
-	}
-
-	@Bean
-	public EnvironmentRepository defaultEnvironmentRepository(DataSource dataSource) {
 		String configSql = environment.getProperty("reap-config.jdbc.sql");
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);

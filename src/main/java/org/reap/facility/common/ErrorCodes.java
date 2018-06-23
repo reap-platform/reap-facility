@@ -46,5 +46,10 @@ public final class ErrorCodes {
 
 	/** 路由配置重复. */
 	public static final String DUPLICATED_ROUTE = "REAPFA0004";
+	
+	/** 应用不存在. */
+	public static final String APPLICATION_NOT_EXIST = "REAPFA0005";
 
+	/** 应用重复. */
+	public static final String DUPLICATED_APPLICATION = "REAPFA0006";
 }

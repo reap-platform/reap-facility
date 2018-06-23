@@ -21,30 +21,30 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.reap.facility.common;
+package org.reap.facility.domain;
+
+import org.junit.Test;
+import org.reap.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.junit.Assert.*;
+
 
 /**
- * 集中定义数据域.
  * 
  * @author 7cat
  * @since 1.0
  */
-public final class Fields {
+public class ApplicationRepositoryTest extends BaseTest{
 
-	public static final String APPLICATION = "application";
-
-	public static final String PROFILE = "profile";
-
-	public static final String LABEL = "label";
-
-	public static final String NAME = "name";
-
-	public static final String VALUE = "value";
-
-	public static final String TOKEN = "token";
-
-	public static final String SYSTEM_CODE = "systemCode";
-
-	public static final String OWNER = "owner";
-
+	@Autowired
+	private ApplicationRepository applicationRepository;
+	
+	/**
+	 * Test method for {@link org.reap.facility.domain.ApplicationRepository#existsByNameOrSystemCode(java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	public void testExistsByNameOrSystemCode() {
+		assertTrue(applicationRepository.existsByNameOrSystemCode("用户管理服务",null));
+	}
 }

@@ -4,7 +4,7 @@
 	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}" />
 	<springProfile name="dev">
 		<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
-		<root level="INFO">
+		<root level="DEBUG">
 			<appender-ref ref="CONSOLE" />
 		</root>
 	</springProfile>
@@ -53,7 +53,7 @@
 				</root>
 			</then>
 			<else>
-				<root level="DEBUG">
+				<root level="INFO">
 					<appender-ref ref="FILE" />
 				</root>
 			</else>

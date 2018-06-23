@@ -21,30 +21,13 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.reap.facility.common;
+package org.reap.facility.domain;
 
-/**
- * 集中定义数据域.
- * 
- * @author 7cat
- * @since 1.0
- */
-public final class Fields {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-	public static final String APPLICATION = "application";
+public interface ApplicationRepository
+		extends JpaRepository<Application, String>, JpaSpecificationExecutor<Application> {
 
-	public static final String PROFILE = "profile";
-
-	public static final String LABEL = "label";
-
-	public static final String NAME = "name";
-
-	public static final String VALUE = "value";
-
-	public static final String TOKEN = "token";
-
-	public static final String SYSTEM_CODE = "systemCode";
-
-	public static final String OWNER = "owner";
-
+	boolean existsByNameOrSystemCode(String name, String systemCode);
 }

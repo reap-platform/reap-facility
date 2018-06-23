@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import org.reap.facility.domain.RouteRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.netflix.zuul.filters.RefreshableRouteLocator;
 import org.springframework.cloud.netflix.zuul.filters.SimpleRouteLocator;
@@ -42,6 +43,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 通过数据库表来进行 Zuul 的初始化工作，并且支持动态刷新.
  */
+@ConditionalOnProperty(value = "reap.config.enabled", matchIfMissing = true)
 @Configuration
 public class RouterConfiguration {
 
