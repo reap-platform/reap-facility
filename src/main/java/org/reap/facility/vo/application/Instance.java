@@ -21,23 +21,67 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.reap.facility.common;
+package org.reap.facility.vo.application;
+
+import java.util.Date;
+
+import com.netflix.appinfo.InstanceInfo.InstanceStatus;
 
 /**
- * 集中定义常量.
  * 
  * @author 7cat
  * @since 1.0
  */
-public final class Constants {
+public class Instance {
 
-	public static final String DEFAULT_PAGE_SIZE = "10";
+	private InstanceStatus status;
 
-	public static final String DEFAULT_PAGE_NUMBER = "0";
+	private String homePageUrl;
 
-	public static final String VERIFY_TOKEN_NO = "N";
+	private String ipAddr;
 
-	public static final String DEFAULT_CONFIG_EXTRACT_SQL = "SELECT NAME, VALUE from CONFIG where APPLICATION=? and PROFILE=? and LABEL=?";
+	private Date lastUpdatedTimestamp;
 
-	public static final String API_DOC_URL_PREFIX = "apidoc/index.html";
+	private Date lastDirtyTimestamp;
+
+	public InstanceStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(InstanceStatus status) {
+		this.status = status;
+	}
+
+	public String getHomePageUrl() {
+		return homePageUrl;
+	}
+
+	public void setHomePageUrl(String homePageUrl) {
+		this.homePageUrl = homePageUrl;
+	}
+
+	public String getIpAddr() {
+		return ipAddr;
+	}
+
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
+	}
+
+	public Date getLastUpdatedTimestamp() {
+		return lastUpdatedTimestamp;
+	}
+
+	public void setLastUpdatedTimestamp(Date lastUpdatedTimestamp) {
+		this.lastUpdatedTimestamp = lastUpdatedTimestamp;
+	}
+
+	public Date getLastDirtyTimestamp() {
+		return lastDirtyTimestamp;
+	}
+
+	public void setLastDirtyTimestamp(Date lastDirtyTimestamp) {
+		this.lastDirtyTimestamp = lastDirtyTimestamp;
+	}
+
 }

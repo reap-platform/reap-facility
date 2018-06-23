@@ -33,6 +33,10 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.reap.facility.vo.application.RuntimeInformation;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 /**
  * 
@@ -59,7 +63,8 @@ public class Application {
 	private String remark;
 
 	@Transient
-	private com.netflix.discovery.shared.Application information;
+	@JsonProperty(access = Access.READ_ONLY)
+	private RuntimeInformation information;
 
 	public String getId() {
 		return id;
@@ -109,11 +114,11 @@ public class Application {
 		this.remark = remark;
 	}
 
-	public com.netflix.discovery.shared.Application getInformation() {
+	public RuntimeInformation getInformation() {
 		return information;
 	}
 
-	public void setInformation(com.netflix.discovery.shared.Application information) {
+	public void setInformation(RuntimeInformation information) {
 		this.information = information;
 	}
 }

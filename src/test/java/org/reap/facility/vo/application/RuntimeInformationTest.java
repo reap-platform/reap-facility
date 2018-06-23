@@ -21,23 +21,27 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.reap.facility.common;
+package org.reap.facility.vo.application;
+
+import org.junit.Test;
+
+import com.netflix.appinfo.InstanceInfo;
+
+import static org.junit.Assert.*;
 
 /**
- * 集中定义常量.
  * 
  * @author 7cat
  * @since 1.0
  */
-public final class Constants {
+public class RuntimeInformationTest {
 
-	public static final String DEFAULT_PAGE_SIZE = "10";
+	/**
+	 * Test method for {@link org.reap.facility.vo.application.RuntimeInformation#getStatus()}.
+	 */
+	@Test
+	public void testGetStatus() {
+		assertEquals("UNKNOWN", InstanceInfo.InstanceStatus.UNKNOWN.name());
+	}
 
-	public static final String DEFAULT_PAGE_NUMBER = "0";
-
-	public static final String VERIFY_TOKEN_NO = "N";
-
-	public static final String DEFAULT_CONFIG_EXTRACT_SQL = "SELECT NAME, VALUE from CONFIG where APPLICATION=? and PROFILE=? and LABEL=?";
-
-	public static final String API_DOC_URL_PREFIX = "apidoc/index.html";
 }

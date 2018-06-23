@@ -1,7 +1,8 @@
 import React from 'react'
-import { Row, Col, Table, Popconfirm, Input, Form, Button, Card } from 'antd'
+import { Row, Col, Table, Popconfirm, Input, Form, Button, Card, Divider } from 'antd'
 import moment from 'moment'
 import EditableCell from '../EditableCell'
+
 import CreateForm from './Form'
 
 const FUNCTION_CODE = 'REAPFA0003'
@@ -77,17 +78,31 @@ const Component = ({
       ),
     },
     {
+      title: '状态',
+      dataIndex: 'status',
+      width: '10%',
+      key: 'status',
+      render: (text, record) => (record.information.status),
+    },
+    {
       title: '操作',
       width: '10%',
       dataIndex: 'operation',
       render: (text, record) => {
         return (
-          page && page.content && page.content.length > 0 ?
-            (
-              <Popconfirm title="确认删除?" onConfirm={() => dispatch({ type: `${FUNCTION_CODE}/delete`, id: record.id })}>
-                <a href="#">删除</a>
-              </Popconfirm>
-            ) : null
+          <span>
+            <Popconfirm title="确认删除?" onConfirm={() => dispatch({ type: `${FUNCTION_CODE}/delete`, id: record.id })}>
+              <a href="#">删除</a>
+            </Popconfirm>
+            <Divider type="vertical" />
+            <a href="#"
+              disabled={!record.information.apiDocUrl}
+              onClick={(e) => {
+              e.preventDefault()
+                window.open(record.information.apiDocUrl)
+          }}
+            >接口文档</a>
+          </span>
         )
       },
     },

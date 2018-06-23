@@ -28,6 +28,7 @@ import org.reap.facility.common.ErrorCodes;
 import org.reap.facility.domain.Application;
 import org.reap.facility.domain.ApplicationRepository;
 import org.reap.facility.vo.QueryApplicationSpec;
+import org.reap.facility.vo.application.RuntimeInformation;
 import org.reap.support.DefaultResult;
 import org.reap.support.Result;
 import org.reap.util.Assert;
@@ -61,7 +62,7 @@ public class ApplicationController {
 	/** @apiDefine Application 应用维护 */
 
 	/**
-	 * @api {post} /application 创建参数
+	 * @api {post} /application 创建应用
 	 * @apiName createApplication
 	 * @apiGroup Application
 	 * @apiParam (Body) {String} name 应用名称
@@ -87,7 +88,7 @@ public class ApplicationController {
 	}
 
 	/**
-	 * @api {delete} /application/{id} 删除参数
+	 * @api {delete} /application/{id} 删除应用
 	 * @apiName deleteApplication
 	 * @apiGroup Application
 	 * @apiParam (PathVariable) {String} id 参数 id
@@ -103,7 +104,7 @@ public class ApplicationController {
 	}
 
 	/**
-	 * @api {put} /application 更新参数
+	 * @api {put} /application 更新应用
 	 * @apiName updateApplication
 	 * @apiGroup Application
 	 * @apiParam (Body) {String} id 应用的唯一标识（UUID 无业务语义）
@@ -135,7 +136,7 @@ public class ApplicationController {
 	}
 
 	/**
-	 * @api {get} /applications 查询参数
+	 * @api {get} /applications 查询应用
 	 * @apiName queryApplication
 	 * @apiGroup Application
 	 * @apiParam (QueryString) {Number} [page=0] 页码
@@ -168,7 +169,7 @@ public class ApplicationController {
 		if (discoveryClient != null) {
 			Applications applications = discoveryClient.getApplications();
 			applicationPage.getContent().stream().forEach(app -> {
-				app.setInformation(applications.getRegisteredApplications(app.getSystemCode()));
+				app.setInformation(new RuntimeInformation(applications.getRegisteredApplications(app.getSystemCode())));
 			});
 		}
 		return DefaultResult.newResult(applicationPage);
