@@ -5,6 +5,7 @@ const config = function () {
     functions: [
       { code: 'REAPFA0001', description: '参数维护' },
       { code: 'REAPFA0002', description: '路由维护' },
+      { code: 'REAPFA0003', description: '应用维护' },
     ],
   }
 

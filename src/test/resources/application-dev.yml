@@ -1,6 +1,7 @@
 server:
   servlet:
     context-path: /apis/reap-facility
+  port: 8080
     
 spring:
   datasource: 

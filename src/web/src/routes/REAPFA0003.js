@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row } from 'antd'
-import RouteList from '../components/REAPFA0002/RouteList'
-import styles from './REAPFA0002.less'
+import List from '../components/REAPFA0003/List'
+import styles from './REAPFA0003.less'
 
 export default ({
   page, dispatch, effects, showCreateModal,
@@ -9,11 +9,11 @@ export default ({
   return (
     <div className={styles.container}>
       <Row>
-        <RouteList
+        <List
           page={page}
           dispatch={dispatch}
           showCreateModal={showCreateModal}
-          loading={effects['REAPFA0002/query']}
+          loading={effects['REAPFA0003/query']}
         />
       </Row>
     </div>

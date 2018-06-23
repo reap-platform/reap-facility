@@ -4,7 +4,7 @@ import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../constants'
 
 const { notification: { error } } = feedback
 
-function functionSpec (state) {
+function specification (state) {
   return {
     size: state.page && state.page.size,
     page: state.page && state.page.number,
@@ -38,12 +38,12 @@ export default {
         error(result)
       }
     },
-    * update ({ func }, { call, put, select }) {
+    * update ({ data }, { call, put, select }) {
       const state = yield select(({ REAPFA0002 }) => (REAPFA0002))
-      const result = yield call(update, func)
+      const result = yield call(update, data)
       if (result.success) {
         yield put({
-          type: 'query', ...functionSpec(state),
+          type: 'query', ...specification(state),
         })
       } else {
         error(result)
@@ -53,18 +53,18 @@ export default {
       const result = yield call(remove, id)
       if (result.success) {
         const state = yield select(({ REAPFA0002 }) => (REAPFA0002))
-        yield put({ type: 'query', ...functionSpec(state) })
+        yield put({ type: 'query', ...specification(state) })
       } else {
         error(result)
       }
     },
-    * create ({ func, form }, { call, select, put }) {
+    * create ({ data, form }, { call, select, put }) {
       const state = yield select(({ REAPFA0002 }) => (REAPFA0002))
-      const result = yield call(create, func)
+      const result = yield call(create, data)
       if (result.success) {
         form.resetFields()
         yield put({ type: 'setState', showCreateModal: false })
-        yield put({ type: 'query', ...functionSpec(state) })
+        yield put({ type: 'query', ...specification(state) })
       } else {
         error(result)
       }

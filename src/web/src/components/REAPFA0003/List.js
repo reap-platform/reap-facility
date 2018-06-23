@@ -1,16 +1,12 @@
 import React from 'react'
 import { Row, Col, Table, Popconfirm, Input, Form, Button, Card } from 'antd'
+import moment from 'moment'
 import EditableCell from '../EditableCell'
-import FunctionForm from './RouteForm'
+import CreateForm from './Form'
 
-const formItemLayout = {
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-}
+const FUNCTION_CODE = 'REAPFA0003'
+
+const formItemLayout = { labelCol: { span: 8 }, wrapperCol: { span: 16 } }
 
 const Component = ({
   page, dispatch, showCreateModal, loading,
@@ -20,12 +16,12 @@ const Component = ({
     return (value) => {
       const update = page.content.find(o => o.id === key)
       update[dataIndex] = value
-      dispatch({ type: 'REAPFA0002/update', data: update })
+      dispatch({ type: `${FUNCTION_CODE}/update`, data: update })
     }
   }
   const columns = [
     {
-      title: '路由名称',
+      title: '应用名称',
       dataIndex: 'name',
       width: '15%',
       key: 'name',
@@ -37,42 +33,36 @@ const Component = ({
       ),
     },
     {
-      title: '路由规则',
-      dataIndex: 'path',
+      title: '系统码',
+      dataIndex: 'systemCode',
       width: '25%',
-      key: 'path',
+      key: 'systemCode',
       render: (text, record) => (
         <EditableCell
           length={30}
           value={text}
-          onChange={onCellChange(record.id, 'path')}
+          onChange={onCellChange(record.id, 'systemCode')}
         />
       ),
     },
     {
-      title: '服务ID(serviceId)',
-      dataIndex: 'serviceId',
-      width: '25%',
-      key: 'serviceId',
+      title: '负责人',
+      dataIndex: 'owner',
+      width: '15%',
+      key: 'owner',
       render: (text, record) => (
         <EditableCell
           value={text}
-          onChange={onCellChange(record.id, 'serviceId')}
+          onChange={onCellChange(record.id, 'owner')}
         />
       ),
     },
     {
-      title: '转发地址(默认通过 serviceId 查找服务地址)',
-      dataIndex: 'url',
-      width: '30%',
-      key: 'url',
-      render: (text, record) => (
-        <EditableCell
-          length={50}
-          value={text}
-          onChange={onCellChange(record.id, 'url')}
-        />
-      ),
+      title: '创建时间',
+      width: '10%',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: text => (text ? moment(text).format('YYYY-MM-DD HH:mm:ss') : null),
     },
     {
       title: '操作',
@@ -82,7 +72,7 @@ const Component = ({
         return (
           page && page.content && page.content.length > 0 ?
             (
-              <Popconfirm title="确认删除?" onConfirm={() => dispatch({ type: 'REAPFA0002/delete', id: record.id })}>
+              <Popconfirm title="确认删除?" onConfirm={() => dispatch({ type: `${FUNCTION_CODE}/delete`, id: record.id })}>
                 <a href="#">删除</a>
               </Popconfirm>
             ) : null
@@ -92,15 +82,15 @@ const Component = ({
   ]
 
   return (
-    <Card title="路由管理" bordered={false}>
+    <Card title="应用管理" bordered={false}>
       <Row>
-        <Col md={6} sm={24}>
-          <Item label="路由名称" {...formItemLayout}>
+        <Col md={6}>
+          <Item label="应用名称" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
                 dispatch({
-                  type: 'REAPFA0002/setState',
+                  type: `${FUNCTION_CODE}/setState`,
                   search: {
                     name: value,
                   },
@@ -109,77 +99,51 @@ const Component = ({
             />
           </Item>
         </Col>
-        <Col md={6} sm={24}>
-          <Item label="路由规则" {...formItemLayout}>
+        <Col md={6}>
+          <Item label="系统码" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
                 dispatch({
-                  type: 'REAPFA0002/setState',
+                  type: `${FUNCTION_CODE}/setState`,
                   search: {
-                    path: value,
+                    systemCode: value,
                   },
                 })
               }}
             />
           </Item>
         </Col>
-        <Col md={6} sm={24}>
-          <Item label="服务ID" {...formItemLayout}>
+        <Col md={6}>
+          <Item label="负责人" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
                 dispatch({
-                  type: 'REAPFA0002/setState',
+                  type: `${FUNCTION_CODE}/setState`,
                   search: {
-                    serviceId: value,
+                    owner: value,
                   },
                 })
               }}
             />
           </Item>
         </Col>
-      </Row>
-      <Row>
-        <Col md={6} sm={24}>
-          <Item label="转发地址" {...formItemLayout}>
-            <Input
-              onChange={(e) => {
-                const { value } = e.target
-                dispatch({
-                  type: 'REAPFA0002/setState',
-                  search: {
-                    path: value,
-                  },
-                })
-              }}
-            />
-          </Item>
-        </Col>
-        <Col md={6} sm={24}>
+        <Col md={6}>
           <Item {...{ wrapperCol: { span: 16, push: 2 } }}>
-            <Button
-              type="primary"
-              htmlType="button"
-              icon="search"
-              onClick={
-                () => dispatch({ type: 'REAPFA0002/query' })
-              }
-            >
-            查询
-            </Button>
+            <Button type="primary" htmlType="button" icon="search" onClick={() => dispatch({ type: `${FUNCTION_CODE}/query` })} >查询 </Button>
           </Item>
         </Col>
       </Row>
       <Row>
-        <FunctionForm showCreateModal={showCreateModal} dispatch={dispatch} />
+        <CreateForm showCreateModal={showCreateModal} dispatch={dispatch} />
       </Row>
       <Row>
         <Table dataSource={page && page.content}
           pagination={{
             total: page && page.totalElements,
             showTotal: total => `总记录数 ${total} `,
-            onChange: (number, size) => (dispatch({ type: 'REAPFA0002/query', page: number - 1, size })),
+            onChange: (number, size) => (dispatch({ type: `${FUNCTION_CODE}/query`, page: number - 1, size })),
         }}
           rowKey="id"
           columns={columns}
