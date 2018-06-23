@@ -30,6 +30,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -56,6 +57,9 @@ public class Application {
 	private Date createTime;
 
 	private String remark;
+
+	@Transient
+	private com.netflix.discovery.shared.Application information;
 
 	public String getId() {
 		return id;
@@ -105,4 +109,11 @@ public class Application {
 		this.remark = remark;
 	}
 
+	public com.netflix.discovery.shared.Application getInformation() {
+		return information;
+	}
+
+	public void setInformation(com.netflix.discovery.shared.Application information) {
+		this.information = information;
+	}
 }

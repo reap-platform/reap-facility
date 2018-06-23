@@ -68,7 +68,7 @@ public class QueryApplicationSpec {
 				if (StringUtils.hasText(getOwner())) {
 					predicate.add(cb.like(root.get(Fields.OWNER), "%" + getOwner() + "%"));
 				}
-
+				query.orderBy(cb.asc(root.get(Fields.SYSTEM_CODE)));
 				query.where(predicate.toArray(new Predicate[predicate.size()]));
 				return query.getRestriction();
 			}

@@ -35,7 +35,7 @@ const Component = ({
     {
       title: '系统码',
       dataIndex: 'systemCode',
-      width: '25%',
+      width: '15%',
       key: 'systemCode',
       render: (text, record) => (
         <EditableCell
@@ -63,6 +63,18 @@ const Component = ({
       dataIndex: 'createTime',
       key: 'createTime',
       render: text => (text ? moment(text).format('YYYY-MM-DD HH:mm:ss') : null),
+    },
+    {
+      title: '备注',
+      dataIndex: 'remark',
+      width: '20%',
+      key: 'remark',
+      render: (text, record) => (
+        <EditableCell
+          value={text}
+          onChange={onCellChange(record.id, 'remark')}
+        />
+      ),
     },
     {
       title: '操作',

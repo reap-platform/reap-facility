@@ -42,12 +42,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.shared.Applications;
+
 /**
  * @author 7cat
  * @since 1.0
  */
 @RestController
 public class ApplicationController {
+
+	@Autowired(required = false)
+	private EurekaClient discoveryClient;
 
 	@Autowired
 	private ApplicationRepository applicationRepository;
@@ -156,12 +162,21 @@ public class ApplicationController {
 	@RequestMapping(path = "/applications", method = RequestMethod.GET)
 	public Result<Page<Application>> find(@RequestParam(defaultValue = Constants.DEFAULT_PAGE_NUMBER) int page,
 			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, QueryApplicationSpec spec) {
-		return DefaultResult.newResult(
-				applicationRepository.findAll(spec.toSpecification(), PageRequest.of(page, size)));
+		Page<Application> applicationPage = applicationRepository.findAll(spec.toSpecification(),
+				PageRequest.of(page, size));
+
+		if (discoveryClient != null) {
+			Applications applications = discoveryClient.getApplications();
+			applicationPage.getContent().stream().forEach(app -> {
+				app.setInformation(applications.getRegisteredApplications(app.getSystemCode()));
+			});
+		}
+		return DefaultResult.newResult(applicationPage);
 	}
 
 	private void validate(Application application) {
-		boolean exists = applicationRepository.existsByNameOrSystemCode(application.getName(), application.getSystemCode());
+		boolean exists = applicationRepository.existsByNameOrSystemCode(application.getName(),
+				application.getSystemCode());
 		Assert.isTrue(!exists, ErrorCodes.DUPLICATED_CONFIG);
 	}
 }
