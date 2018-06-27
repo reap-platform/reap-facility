@@ -60,7 +60,7 @@ public class Route {
 	/**
 	 * The service ID (if any) to map to this route. You can specify a physical URL or a service, but not both.
 	 */
-	private String serviceId;
+	private String systemCode;
 
 	/**
 	 * A full physical URL to map to the route. An alternative is to use a service ID and service discovery to find the
@@ -98,12 +98,13 @@ public class Route {
 		this.path = path;
 	}
 
-	public String getServiceId() {
-		return serviceId;
+	public String getSystemCode() {
+		return systemCode;
 	}
 
-	public void setServiceId(String serviceId) {
-		this.serviceId = serviceId;
+	
+	public void setSystemCode(String systemCode) {
+		this.systemCode = systemCode;
 	}
 
 	public String getUrl() {
@@ -122,10 +123,13 @@ public class Route {
 		this.stripPrefix = stripPrefix;
 	}
 
+	public String getServiceId() {
+		return getSystemCode();
+	}
+	
 	@Override
 	public String toString() {
-		return "Route [id=" + id + ", name=" + name + ", path=" + path + ", serviceId=" + serviceId + ", url=" + url
+		return "Route [id=" + id + ", name=" + name + ", path=" + path + ", systemCode=" + systemCode + ", url=" + url
 				+ ", stripPrefix=" + stripPrefix + "]";
 	}
-
 }

@@ -1,5 +1,7 @@
 import React from 'react'
-import { Form, Input, Modal, Button } from 'antd'
+import { Form, Input, Modal, Button, Select } from 'antd'
+
+const { Option } = Select
 
 const FormItem = Form.Item
 
@@ -13,10 +15,10 @@ const formItemLayout = {
 }
 
 const Component = ({
-  form, dispatch, showCreateModal,
+  form, dispatch, showCreateModal, applications,
 }) => {
   const { getFieldDecorator } = form
-
+  const options = applications && applications.map(a => <Option key={a.id} value={a.systemCode}>{a.name}/{a.systemCode}</Option>)
 
   return (
     <div>
@@ -61,20 +63,15 @@ const Component = ({
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="服务ID"
+            label="归属系统"
           >
-            {getFieldDecorator('serviceId', {
+            {getFieldDecorator('systemCode', {
             rules: [{
-              required: true, message: '请输入服务ID（归属系统）',
+              required: true, message: '请选择参数归属系统',
             }],
-          })(<Input />)}
+          })(<Select showSearch placeholder="请选择系统" >{options}</Select>)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="转发地址"
-          >
-            {getFieldDecorator('url')(<Input />)}
-          </FormItem>
+
         </Form>
       </Modal>
     </div>

@@ -48,11 +48,7 @@ public class QueryRouteSpec {
 
 	private String path;
 
-	private String serviceId;
-
-	private String url;
-
-	private String stripPrefix;
+	private String systemCode;
 
 	public Specification<Route> toSpecification() {
 
@@ -62,24 +58,17 @@ public class QueryRouteSpec {
 			public Predicate toPredicate(Root<Route> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> predicate = new ArrayList<>();
 				if (StringUtils.hasText(getName())) {
-					predicate.add(cb.like(root.get(Fields.APPLICATION), "%" + getName() + "%"));
+					predicate.add(cb.like(root.get(Fields.NAME), "%" + getName() + "%"));
 				}
 
 				if (StringUtils.hasText(getPath())) {
-					predicate.add(cb.like(root.get(Fields.LABEL), "%" + getPath() + "%"));
+					predicate.add(cb.like(root.get(Fields.PATH), "%" + getPath() + "%"));
 				}
 
-				if (StringUtils.hasText(getServiceId())) {
-					predicate.add(cb.like(root.get(Fields.PROFILE), "%" + getServiceId() + "%"));
+				if (StringUtils.hasText(getSystemCode())) {
+					predicate.add(cb.like(root.get(Fields.SYSTEM_CODE), "%" + getSystemCode() + "%"));
 				}
 
-				if (StringUtils.hasText(getUrl())) {
-					predicate.add(cb.like(root.get(Fields.NAME), "%" + getUrl() + "%"));
-				}
-
-				if (StringUtils.hasText(getStripPrefix())) {
-					predicate.add(cb.like(root.get(Fields.VALUE), "%" + getStripPrefix() + "%"));
-				}
 				query.where(predicate.toArray(new Predicate[predicate.size()]));
 				return query.getRestriction();
 			}
@@ -104,27 +93,11 @@ public class QueryRouteSpec {
 		this.path = path;
 	}
 
-	public String getServiceId() {
-		return serviceId;
+	public String getSystemCode() {
+		return systemCode;
 	}
 
-	public void setServiceId(String serviceId) {
-		this.serviceId = serviceId;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getStripPrefix() {
-		return stripPrefix;
-	}
-
-	public void setStripPrefix(String stripPrefix) {
-		this.stripPrefix = stripPrefix;
+	public void setSystemCode(String systemCode) {
+		this.systemCode = systemCode;
 	}
 }

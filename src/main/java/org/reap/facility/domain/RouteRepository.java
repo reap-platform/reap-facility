@@ -28,5 +28,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface RouteRepository extends JpaRepository<Route, String>, JpaSpecificationExecutor<Route> {
 
-	boolean existsByNameAndServiceId(String name, String serviceId);
+	boolean existsByNameAndSystemCode(String name, String systemCode);
 }

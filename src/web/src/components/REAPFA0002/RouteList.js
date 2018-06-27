@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Table, Popconfirm, Input, Form, Button, Card } from 'antd'
 import EditableCell from '../EditableCell'
-import FunctionForm from './RouteForm'
+import RouteForm from './RouteForm'
 
 const formItemLayout = {
   labelCol: {
@@ -13,7 +13,7 @@ const formItemLayout = {
 }
 
 const Component = ({
-  page, dispatch, showCreateModal, loading,
+  page, dispatch, showCreateModal, loading, applications,
 }) => {
   const { Item } = Form
   const onCellChange = (key, dataIndex) => {
@@ -27,7 +27,7 @@ const Component = ({
     {
       title: '路由名称',
       dataIndex: 'name',
-      width: '15%',
+      width: '30%',
       key: 'name',
       render: (text, record) => (
         <EditableCell
@@ -39,7 +39,7 @@ const Component = ({
     {
       title: '路由规则',
       dataIndex: 'path',
-      width: '25%',
+      width: '30%',
       key: 'path',
       render: (text, record) => (
         <EditableCell
@@ -50,27 +50,14 @@ const Component = ({
       ),
     },
     {
-      title: '服务ID(serviceId)',
-      dataIndex: 'serviceId',
-      width: '25%',
-      key: 'serviceId',
-      render: (text, record) => (
-        <EditableCell
-          value={text}
-          onChange={onCellChange(record.id, 'serviceId')}
-        />
-      ),
-    },
-    {
-      title: '转发地址(默认通过 serviceId 查找服务地址)',
-      dataIndex: 'url',
+      title: '归属系统',
+      dataIndex: 'systemCode',
       width: '30%',
-      key: 'url',
+      key: 'systemCode',
       render: (text, record) => (
         <EditableCell
-          length={50}
           value={text}
-          onChange={onCellChange(record.id, 'url')}
+          onChange={onCellChange(record.id, 'systemCode')}
         />
       ),
     },
@@ -125,14 +112,14 @@ const Component = ({
           </Item>
         </Col>
         <Col md={6} sm={24}>
-          <Item label="服务ID" {...formItemLayout}>
+          <Item label="系统码" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
                 dispatch({
                   type: 'REAPFA0002/setState',
                   search: {
-                    serviceId: value,
+                    systemCode: value,
                   },
                 })
               }}
@@ -141,21 +128,6 @@ const Component = ({
         </Col>
       </Row>
       <Row>
-        <Col md={6} sm={24}>
-          <Item label="转发地址" {...formItemLayout}>
-            <Input
-              onChange={(e) => {
-                const { value } = e.target
-                dispatch({
-                  type: 'REAPFA0002/setState',
-                  search: {
-                    path: value,
-                  },
-                })
-              }}
-            />
-          </Item>
-        </Col>
         <Col md={6} sm={24}>
           <Item {...{ wrapperCol: { span: 16, push: 2 } }}>
             <Button
@@ -172,7 +144,7 @@ const Component = ({
         </Col>
       </Row>
       <Row>
-        <FunctionForm showCreateModal={showCreateModal} dispatch={dispatch} />
+        <RouteForm showCreateModal={showCreateModal} dispatch={dispatch} applications={applications} />
       </Row>
       <Row>
         <Table dataSource={page && page.content}

@@ -36,6 +36,8 @@ public final class Fields {
 	public static final String PROFILE = "profile";
 
 	public static final String LABEL = "label";
+	
+	public static final String PATH = "path";
 
 	public static final String NAME = "name";
 

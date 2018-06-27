@@ -62,14 +62,14 @@ public class RouteController {
 	 * @apiGroup Route
 	 * @apiParam (Body) {String} name 路由名称
 	 * @apiParam (Body) {String} path 路由规则
-	 * @apiParam (Body) {String} [serviceId] eureka 中注册的服务 id，如果设置了 url 不需要送值
+	 * @apiParam (Body) {String} [systemCode] 系统码，注册在 eureka 中的 serviceId
 	 * @apiParam (Body) {String} [url] 非注册在 eureka 中的服务转发的全限定 url
 	 * @apiSuccess (Success) {Boolean} success 业务成功标识 <code>true</code>
 	 * @apiSuccess (Success) {String} responseCode 响应码 'SC0000'
 	 * @apiSuccess (Success) {Object} payload 响应数据
 	 * @apiSuccess (Success) {String} payload.id 新建路由 id
 	 * @apiSuccess (Success) {String} payload.name 路由名称
-	 * @apiSuccess (Success) {String} payload.servieId 服务 id
+	 * @apiSuccess (Success) {String} payload.systemCode 归属系统
 	 * @apiSuccess (Success) {String} payload.url 路由转发 url
 	 * @apiError (Error) {Boolean} success 业务成功标识 <code>false</code>
 	 * @apiError (Error) {String} responseCode 错误码
@@ -104,14 +104,14 @@ public class RouteController {
 	 * @apiParam (Body) {String} id 路由 id
 	 * @apiParam (Body) {String} name 路由名称
 	 * @apiParam (Body) {String} path 路由规则
-	 * @apiParam (Body) {String} serviceId eureka 中注册的服务 id，如果设置了 url 不需要送值
+	 * @apiParam (Body) {String} systemCode 系统码，注册在 eureka 中的 serviceId
 	 * @apiParam (Body) {String} url 非注册在 eureka 中的服务转发的全限定 url
 	 * @apiSuccess (Success) {Boolean} success 业务成功标识 <code>true</code>
 	 * @apiSuccess (Success) {String} responseCode 响应码 'SC0000'
 	 * @apiSuccess (Success) {Object} payload 响应数据
 	 * @apiSuccess (Success) {String} payload.id 新建路由 id
 	 * @apiSuccess (Success) {String} payload.name 路由名称
-	 * @apiSuccess (Success) {String} payload.servieId 服务 id
+	 * @apiSuccess (Success) {String} payload.systemCode 归属系统
 	 * @apiSuccess (Success) {String} payload.url 路由转发 url
 	 * @apiError (Error) {Boolean} success 业务成功标识 <code>false</code>
 	 * @apiError (Error) {String} responseCode 错误码
@@ -123,7 +123,7 @@ public class RouteController {
 				ErrorCodes.ROUTE_NOT_EXIST);
 		persisted.setName(route.getName());
 		persisted.setPath(route.getPath());
-		persisted.setServiceId(route.getServiceId());
+		persisted.setSystemCode(route.getSystemCode());
 		persisted.setUrl(route.getUrl());
 		persisted.setStripPrefix(route.getStripPrefix());
 		return DefaultResult.newResult(routeRepository.save(persisted));
@@ -137,7 +137,7 @@ public class RouteController {
 	 * @apiParam (QueryString) {Number} [size=10] 每页记录数
 	 * @apiParam (QueryString) {String} [name] 路由名称 
 	 * @apiParam (QueryString) {String} [path] 路由规则
-	 * @apiParam (QueryString) {String} [serviceId] 服务 id
+	 * @apiParam (QueryString) {String} [systemCode] 系统码，注册在 eureka 中的 serviceId
 	 * @apiParam (QueryString) {String} [url] 转发 url
 	 * @apiSuccess (Success) {Boolean} success 成功标识 <code>true</code>
 	 * @apiSuccess (Success) {String} responseCode 响应码 'SC0000'
@@ -149,7 +149,7 @@ public class RouteController {
 	 * @apiSuccess (Success) {String} payload.content.id 路由 id
 	 * @apiSuccess (Success) {String} payload.content.name 路由名称
 	 * @apiSuccess (Success) {String} payload.content.path 路由规则
-	 * @apiSuccess (Success) {String} payload.content.serviceId 服务 id
+	 * @apiSuccess (Success) {String} payload.content.systemCode 系统码，注册在 eureka 中的 serviceId
 	 * @apiSuccess (Success) {String} payload.content.url 转发 url
 	 * @apiError (Error) {Boolean} success 业务成功标识 <code>false</code>
 	 * @apiError (Error) {String} responseCode 错误码
@@ -162,7 +162,7 @@ public class RouteController {
 	}
 
 	private void validate(Route route) {
-		boolean exists = routeRepository.existsByNameAndServiceId(route.getName(), route.getServiceId());
+		boolean exists = routeRepository.existsByNameAndSystemCode(route.getName(), route.getSystemCode());
 		Assert.isTrue(!exists, ErrorCodes.DUPLICATED_ROUTE);
 	}
 }
