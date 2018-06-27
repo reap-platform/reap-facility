@@ -41,6 +41,18 @@ const Component = ({
         }}
       >
         <Form>
+
+          <FormItem
+            {...formItemLayout}
+            label="归属系统"
+          >
+            {getFieldDecorator('systemCode', {
+            rules: [{
+              required: true, message: '请选择参数归属系统',
+            }],
+          })(<Select showSearch placeholder="请选择系统" >{options}</Select>)}
+          </FormItem>
+
           <FormItem
             {...formItemLayout}
             label="路由名称"
@@ -61,17 +73,6 @@ const Component = ({
             }],
           })(<Input />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="归属系统"
-          >
-            {getFieldDecorator('systemCode', {
-            rules: [{
-              required: true, message: '请选择参数归属系统',
-            }],
-          })(<Select showSearch placeholder="请选择系统" >{options}</Select>)}
-          </FormItem>
-
         </Form>
       </Modal>
     </div>
