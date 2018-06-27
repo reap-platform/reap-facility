@@ -1,6 +1,7 @@
 import React from 'react'
-import { Form, Input, Modal, Button } from 'antd'
+import { Form, Input, Modal, Button, Select } from 'antd'
 
+const { Option } = Select
 const FormItem = Form.Item
 
 const formItemLayout = {
@@ -13,11 +14,11 @@ const formItemLayout = {
 }
 
 const Component = ({
-  form, dispatch, showCreateModal,
+  form, dispatch, showCreateModal, applications,
 }) => {
   const { getFieldDecorator } = form
-
-
+  const options = applications && applications.map(a => <Option key={a.id} value={a.systemCode}>{a.name}/{a.systemCode}</Option>)
+  options.unshift(<Option key="reap" value="reap">平台/reap</Option>)
   return (
     <div>
       <Button type="primary"
@@ -41,13 +42,13 @@ const Component = ({
         <Form>
           <FormItem
             {...formItemLayout}
-            label="应用"
+            label="归属系统"
           >
-            {getFieldDecorator('application', {
+            {getFieldDecorator('systemCode', {
             rules: [{
-              required: true, message: '请输入',
+              required: true, message: '请选择参数归属系统',
             }],
-          })(<Input />)}
+          })(<Select showSearch placeholder="请选择系统" >{options}</Select>)}
           </FormItem>
           <FormItem
             {...formItemLayout}

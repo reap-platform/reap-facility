@@ -23,6 +23,8 @@
 
 package org.reap.facility.web;
 
+import java.util.List;
+
 import org.reap.facility.common.Constants;
 import org.reap.facility.common.ErrorCodes;
 import org.reap.facility.domain.Application;
@@ -137,7 +139,7 @@ public class ApplicationController {
 
 	/**
 	 * @api {get} /applications 查询应用
-	 * @apiName queryApplication
+	 * @apiName queryApplications
 	 * @apiGroup Application
 	 * @apiParam (QueryString) {Number} [page=0] 页码
 	 * @apiParam (QueryString) {Number} [size=10] 每页记录数
@@ -156,6 +158,16 @@ public class ApplicationController {
 	 * @apiSuccess (Success) {String} payload.content.createTime 创建时间
 	 * @apiSuccess (Success) {String} payload.content.owner 负责人的 username
 	 * @apiSuccess (Success) {String} payload.content.remark 备注
+	 * @apiSuccess (Success) {Object} payload.content.information 运行信息
+	 * @apiSuccess (Success) {String} payload.content.information.status 运行状态: 'UNKNOW' 未知 'UP' 运行 'WARNING' 警告
+	 * @apiSuccess (Success) {String} payload.content.information.apiDocUrl 接口文档 Url
+	 * @apiSuccess (Success) {Object[]} payload.content.information.instants 节点信息
+	 * @apiSuccess (Success) {String} payload.content.information.instants.status 运行状态: 'UP' 活动 'DOWN' 关闭 'STARTING' 启动中
+	 *             'UKNOW' 未知
+	 * @apiSuccess (Success) {String} payload.content.information.instants.homePageUrl 主页地址
+	 * @apiSuccess (Success) {String} payload.content.information.instants.ipAddr IP 地址
+	 * @apiSuccess (Success) {String} payload.content.information.instants.lastUpdatedTimestamp 最后一次状态更新时间
+	 * @apiSuccess (Success) {String} payload.content.information.instants.lastDirtyTimestamp TODO 最后一次XX时间?
 	 * @apiError (Error) {Boolean} success 业务成功标识 <code>false</code>
 	 * @apiError (Error) {String} responseCode 错误码
 	 * @apiError (Error) {String} responseMessage 错误消息
@@ -173,6 +185,27 @@ public class ApplicationController {
 			});
 		}
 		return DefaultResult.newResult(applicationPage);
+	}
+
+	/**
+	 * @api {get} /applications/all 查询所有应用
+	 * @apiName queryAllApplications
+	 * @apiGroup Application
+	 * @apiSuccess (Success) {Boolean} success 成功标识 <code>true</code>
+	 * @apiSuccess (Success) {String} responseCode 响应码 'SC0000'
+	 * @apiSuccess (Success) {Object[]} payload 响应数据
+	 * @apiSuccess (Success) {String} payload.id 应用的唯一标识（UUID 无业务语义）
+	 * @apiSuccess (Success) {String} payload.systemCode 应用代码（spring.application.name）
+	 * @apiSuccess (Success) {String} payload.createTime 创建时间
+	 * @apiSuccess (Success) {String} payload.owner 负责人的 username
+	 * @apiSuccess (Success) {String} payload.remark 备注
+	 * @apiError (Error) {Boolean} success 业务成功标识 <code>false</code>
+	 * @apiError (Error) {String} responseCode 错误码
+	 * @apiError (Error) {String} responseMessage 错误消息
+	 */
+	@RequestMapping(path = "/applications/all", method = RequestMethod.GET)
+	public Result<List<Application>> findAll() {
+		return DefaultResult.newResult(applicationRepository.findAll());
 	}
 
 	private void validate(Application application) {

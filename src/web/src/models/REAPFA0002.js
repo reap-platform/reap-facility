@@ -75,6 +75,10 @@ export default {
       return {
         ...state,
         ...newState,
+        search: {
+          ...state.search,
+          ...newState.search,
+        },
       }
     },
   },

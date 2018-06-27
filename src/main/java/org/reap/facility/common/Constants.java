@@ -37,7 +37,7 @@ public final class Constants {
 
 	public static final String VERIFY_TOKEN_NO = "N";
 
-	public static final String DEFAULT_CONFIG_EXTRACT_SQL = "SELECT NAME, VALUE from CONFIG where APPLICATION=? and PROFILE=? and LABEL=?";
+	public static final String DEFAULT_CONFIG_EXTRACT_SQL = "SELECT NAME, VALUE from CONFIG where SYSTEM_CODE=? and PROFILE=? and LABEL=?";
 
 	public static final String API_DOC_URL_PREFIX = "apidoc/index.html";
 }

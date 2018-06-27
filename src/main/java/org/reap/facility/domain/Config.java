@@ -43,7 +43,7 @@ public class Config {
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
 
-	private String application;
+	private String systemCode;
 
 	private String profile;
 
@@ -53,6 +53,8 @@ public class Config {
 
 	private String value;
 
+	private String remark;
+
 	public String getId() {
 		return id;
 	}
@@ -61,12 +63,12 @@ public class Config {
 		this.id = id;
 	}
 
-	public String getApplication() {
-		return application;
+	public String getSystemCode() {
+		return systemCode;
 	}
 
-	public void setApplication(String application) {
-		this.application = application;
+	public void setSystemCode(String systemCode) {
+		this.systemCode = systemCode;
 	}
 
 	public String getProfile() {
@@ -101,9 +103,17 @@ public class Config {
 		this.value = value;
 	}
 
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	@Override
 	public String toString() {
-		return "Config [id=" + id + ", application=" + application + ", profile=" + profile + ", label=" + label
+		return "Config [id=" + id + ", systemCode=" + systemCode + ", profile=" + profile + ", label=" + label
 				+ ", name=" + name + ", value=" + value + "]";
 	}
 

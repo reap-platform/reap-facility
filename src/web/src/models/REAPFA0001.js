@@ -1,5 +1,6 @@
 import feedback from '../utils/feedback'
 import { create, update, query, remove } from '../apis/config'
+import { queryAll } from '../apis/application'
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../constants'
 
 const { notification: { error } } = feedback
@@ -16,7 +17,7 @@ export default {
   state: {
     search: {
       name: null,
-      serviceId: null,
+      systemCode: null,
       code: null,
     },
     showCreateModal: false,
@@ -24,8 +25,17 @@ export default {
       size: DEFAULT_PAGE_SIZE,
       number: DEFAULT_PAGE_NUMBER,
     },
+    applications: [],
   },
   effects: {
+    * queryApplications (action, { call, put }) {
+      const result = yield call(queryAll)
+      if (result.success) {
+        yield put({ type: 'setState', applications: result.payload })
+      } else {
+        error(result)
+      }
+    },
     * query ({ page = DEFAULT_PAGE_NUMBER, size = DEFAULT_PAGE_SIZE }, { call, put, select }) {
       const state = yield select(({ REAPFA0001 }) => (REAPFA0001))
       const params = {
@@ -75,6 +85,10 @@ export default {
       return {
         ...state,
         ...newState,
+        search: {
+          ...state.search,
+          ...newState.search,
+        },
       }
     },
   },
@@ -83,6 +97,7 @@ export default {
       history.listen((location) => {
         if (location.pathname === '/REAPFA0001') {
           dispatch({ type: 'query', page: DEFAULT_PAGE_NUMBER, size: DEFAULT_PAGE_SIZE })
+          dispatch({ type: 'queryApplications' })
         }
       })
     },

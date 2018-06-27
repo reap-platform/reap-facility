@@ -60,7 +60,7 @@ public class ConfigController {
 	 * @api {post} /config 创建参数
 	 * @apiName createConfig
 	 * @apiGroup Config
-	 * @apiParam (Body) {String} application 归属系统
+	 * @apiParam (Body) {String} systemCode 系统码
 	 * @apiParam (Body) {String} profile 参数生效环境
 	 * @apiParam (Body) {String} label 参数标签
 	 * @apiParam (Body) {String} name 参数名
@@ -69,7 +69,7 @@ public class ConfigController {
 	 * @apiSuccess (Success) {String} responseCode 响应码 'SC0000'
 	 * @apiSuccess (Success) {Object} payload 响应数据
 	 * @apiSuccess (Success) {String} payload.id 新建参数 id
-	 * @apiSuccess (Success) {String} payload.application 归属应用
+	 * @apiSuccess (Success) {String} payload.systemCode 系统码
 	 * @apiSuccess (Success) {String} payload.profile 参数生效环境
 	 * @apiSuccess (Success) {String} payload.label 参数标签
 	 * @apiSuccess (Success) {String} payload.name 参数名
@@ -105,7 +105,7 @@ public class ConfigController {
 	 * @apiName updateConfig
 	 * @apiGroup Config
 	 * @apiParam (Body) {String} id 参数 id
-	 * @apiParam (Body) {String} application 归属系统
+	 * @apiParam (Body) {String} systemCode 系统码
 	 * @apiParam (Body) {String} profile 参数生效环境
 	 * @apiParam (Body) {String} label 参数标签
 	 * @apiParam (Body) {String} name 参数名
@@ -114,7 +114,7 @@ public class ConfigController {
 	 * @apiSuccess (Success) {String} responseCode 响应码 'SC0000'
 	 * @apiSuccess (Success) {Object} payload 响应数据
 	 * @apiSuccess (Success) {String} payload.id 参数 id
-	 * @apiSuccess (Success) {String} payload.application 归属应用
+	 * @apiSuccess (Success) {String} payload.systemCode 系统码
 	 * @apiSuccess (Success) {String} payload.profile 参数生效环境
 	 * @apiSuccess (Success) {String} payload.label 参数标签
 	 * @apiSuccess (Success) {String} payload.name 参数名
@@ -127,11 +127,12 @@ public class ConfigController {
 	public Result<Config> update(@RequestBody Config config) {
 		Config persisted = FunctionalUtils.orElseThrow(configRepository.findById(config.getId()),
 				ErrorCodes.CONFIG_NOT_EXIST);
-		persisted.setApplication(config.getApplication());
+		persisted.setSystemCode(config.getSystemCode());
 		persisted.setProfile(config.getProfile());
 		persisted.setLabel(config.getLabel());
 		persisted.setName(config.getName());
 		persisted.setValue(config.getValue());
+		persisted.setRemark(config.getRemark());
 		return DefaultResult.newResult(configRepository.save(persisted));
 	}
 
@@ -141,7 +142,7 @@ public class ConfigController {
 	 * @apiGroup Config
 	 * @apiParam (QueryString) {Number} [page=0] 页码
 	 * @apiParam (QueryString) {Number} [size=10] 每页记录数
-	 * @apiParam (QueryString) {String} [application] 归属应用，模糊匹配
+	 * @apiParam (QueryString) {String} [systemCode] 系统码
 	 * @apiParam (QueryString) {String} [profile] 归属环境，模糊匹配
 	 * @apiParam (QueryString) {String} [label] 参数标签，模糊匹配
 	 * @apiParam (QueryString) {String} [name] 参数名，模糊匹配
@@ -154,7 +155,7 @@ public class ConfigController {
 	 * @apiSuccess (Success) {Number} payload.numberOfElements 当前记录数
 	 * @apiSuccess (Success) {Object[]} payload.content 参数标签
 	 * @apiSuccess (Success) {String} payload.content.id 参数 id
-	 * @apiSuccess (Success) {String} payload.content.application 归属应用
+	 * @apiSuccess (Success) {String} payload.content.systemCode 系统码
 	 * @apiSuccess (Success) {String} payload.content.profile 参数生效环境
 	 * @apiSuccess (Success) {String} payload.content.label 参数标签
 	 * @apiSuccess (Success) {String} payload.content.name 参数名
@@ -170,7 +171,7 @@ public class ConfigController {
 	}
 
 	private void validate(Config config) {
-		boolean exists = configRepository.existsByApplicationAndProfileAndLabelAndName(config.getApplication(),
+		boolean exists = configRepository.existsBySystemCodeAndProfileAndLabelAndName(config.getSystemCode(),
 				config.getProfile(), config.getLabel(), config.getName());
 		Assert.isTrue(!exists, ErrorCodes.DUPLICATED_CONFIG);
 	}

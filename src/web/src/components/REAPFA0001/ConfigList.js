@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Table, Popconfirm, Input, Form, Button, Card } from 'antd'
 import EditableCell from '../EditableCell'
-import FunctionForm from './ConfigForm'
+import ConfigForm from './ConfigForm'
 
 const formItemLayout = {
   labelCol: {
@@ -14,7 +14,7 @@ const formItemLayout = {
 
 
 const Component = ({
-  page, dispatch, showCreateModal, loading,
+  page, dispatch, showCreateModal, applications, loading,
 }) => {
   const { Item } = Form
   const onCellChange = (key, dataIndex) => {
@@ -26,16 +26,10 @@ const Component = ({
   }
   const columns = [
     {
-      title: '应用',
-      dataIndex: 'application',
+      title: '系统码',
+      dataIndex: 'systemCode',
       width: '10%',
-      key: 'application',
-      render: (text, record) => (
-        <EditableCell
-          value={text}
-          onChange={onCellChange(record.id, 'application')}
-        />
-      ),
+      key: 'systemCode',
     },
     {
       title: '环境',
@@ -64,11 +58,11 @@ const Component = ({
     {
       title: '参数名',
       dataIndex: 'name',
-      width: '30%',
+      width: '25%',
       key: 'name',
       render: (text, record) => (
         <EditableCell
-          length={50}
+          length={40}
           value={text}
           onChange={onCellChange(record.id, 'name')}
         />
@@ -76,14 +70,27 @@ const Component = ({
     },
     {
       title: '参数值',
-      width: '30%',
+      width: '25%',
       dataIndex: 'value',
       key: 'value',
       render: (text, record) => (
         <EditableCell
-          length={50}
+          length={40}
           value={text}
           onChange={onCellChange(record.id, 'value')}
+        />
+      ),
+    },
+    {
+      title: '备注',
+      width: '10%',
+      dataIndex: 'remark',
+      key: 'remark',
+      render: (text, record) => (
+        <EditableCell
+          length={20}
+          value={text}
+          onChange={onCellChange(record.id, 'remark')}
         />
       ),
     },
@@ -108,14 +115,14 @@ const Component = ({
     <Card title="参数管理" bordered={false}>
       <Row>
         <Col md={6} sm={24}>
-          <Item label="归属系统" {...formItemLayout}>
+          <Item label="系统码" {...formItemLayout}>
             <Input
               onChange={(e) => {
                 const { value } = e.target
                 dispatch({
                   type: 'REAPFA0001/setState',
                   search: {
-                    application: value,
+                    systemCode: value,
                   },
                 })
               }}
@@ -200,7 +207,7 @@ const Component = ({
         </Col>
       </Row>
       <Row>
-        <FunctionForm showCreateModal={showCreateModal} dispatch={dispatch} />
+        <ConfigForm showCreateModal={showCreateModal} dispatch={dispatch} applications={applications} />
       </Row>
       <Row>
         <Table dataSource={page && page.content}

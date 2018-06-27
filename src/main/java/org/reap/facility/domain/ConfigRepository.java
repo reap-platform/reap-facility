@@ -28,5 +28,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface ConfigRepository extends JpaRepository<Config, String>, JpaSpecificationExecutor<Config> {
 
-	boolean existsByApplicationAndProfileAndLabelAndName(String application, String profile, String label, String name);
+	boolean existsBySystemCodeAndProfileAndLabelAndName(String systemCode, String profile, String label, String name);
 }
