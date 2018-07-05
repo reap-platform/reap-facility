@@ -27,8 +27,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.GenericGenerator;
-
 /**
  * REAP 平台参数配置实体.
  * 
@@ -39,8 +37,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Config {
 
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	@GeneratedValue
 	private String id;
 
 	private String systemCode;

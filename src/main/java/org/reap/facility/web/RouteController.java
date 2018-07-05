@@ -27,12 +27,14 @@ import org.reap.facility.common.Constants;
 import org.reap.facility.common.ErrorCodes;
 import org.reap.facility.domain.Route;
 import org.reap.facility.domain.RouteRepository;
-import org.reap.facility.vo.QueryRouteSpec;
 import org.reap.support.DefaultResult;
 import org.reap.support.Result;
 import org.reap.util.Assert;
 import org.reap.util.FunctionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -135,7 +137,7 @@ public class RouteController {
 	 * @apiGroup Route
 	 * @apiParam (QueryString) {Number} [page=0] 页码
 	 * @apiParam (QueryString) {Number} [size=10] 每页记录数
-	 * @apiParam (QueryString) {String} [name] 路由名称 
+	 * @apiParam (QueryString) {String} [name] 路由名称
 	 * @apiParam (QueryString) {String} [path] 路由规则
 	 * @apiParam (QueryString) {String} [systemCode] 系统码，注册在 eureka 中的 serviceId
 	 * @apiParam (QueryString) {String} [url] 转发 url
@@ -157,8 +159,11 @@ public class RouteController {
 	 */
 	@RequestMapping(path = "/routes", method = RequestMethod.GET)
 	public Result<Page<Route>> find(@RequestParam(defaultValue = Constants.DEFAULT_PAGE_NUMBER) int page,
-			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, QueryRouteSpec spec) {
-		return DefaultResult.newResult(routeRepository.findAll(spec.toSpecification(), PageRequest.of(page, size)));
+			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, Route route) {
+		Example<Route> example = Example.of(route,
+				ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues().withStringMatcher(
+						StringMatcher.CONTAINING));
+		return DefaultResult.newResult(routeRepository.findAll(example, PageRequest.of(page, size)));
 	}
 
 	private void validate(Route route) {

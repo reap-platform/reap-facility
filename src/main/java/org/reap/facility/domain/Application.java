@@ -32,7 +32,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.reap.facility.vo.application.RuntimeInformation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -47,8 +46,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 public class Application {
 
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	@GeneratedValue
 	private String id;
 
 	private String name;

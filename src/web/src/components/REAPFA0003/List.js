@@ -82,7 +82,7 @@ const Component = ({
       dataIndex: 'status',
       width: '10%',
       key: 'status',
-      render: (text, record) => (record.information.status),
+      render: (text, record) => (record.information && record.information.status),
     },
     {
       title: '操作',
@@ -96,10 +96,10 @@ const Component = ({
             </Popconfirm>
             <Divider type="vertical" />
             <a href="#"
-              disabled={!record.information.apiDocUrl}
+              disabled={!(record.information && record.information.apiDocUrl)}
               onClick={(e) => {
               e.preventDefault()
-                window.open(record.information.apiDocUrl)
+                window.open(record.information ? record.information.apiDocUrl : '')
           }}
             >接口文档</a>
           </span>

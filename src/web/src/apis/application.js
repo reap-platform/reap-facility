@@ -2,7 +2,7 @@ import { stringify } from 'qs'
 import request from '../utils/request'
 
 export function query (specification) {
-  return request(`/apis/reap-facility/applications?${stringify(specification)}`, { method: 'GET' })
+  return request(`/apis/reap-facility/applications?${stringify(specification, { skipNulls: true })}`, { method: 'GET' })
 }
 
 export function queryAll () {

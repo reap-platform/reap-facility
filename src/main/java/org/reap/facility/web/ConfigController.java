@@ -27,12 +27,14 @@ import org.reap.facility.common.Constants;
 import org.reap.facility.common.ErrorCodes;
 import org.reap.facility.domain.Config;
 import org.reap.facility.domain.ConfigRepository;
-import org.reap.facility.vo.QueryConfigSpec;
 import org.reap.support.DefaultResult;
 import org.reap.support.Result;
 import org.reap.util.Assert;
 import org.reap.util.FunctionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -166,8 +168,11 @@ public class ConfigController {
 	 */
 	@RequestMapping(path = "/configs", method = RequestMethod.GET)
 	public Result<Page<Config>> find(@RequestParam(defaultValue = Constants.DEFAULT_PAGE_NUMBER) int page,
-			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, QueryConfigSpec spec) {
-		return DefaultResult.newResult(configRepository.findAll(spec.toSpecification(), PageRequest.of(page, size)));
+			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, Config config) {
+		Example<Config> example = Example.of(config,
+				ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues().withStringMatcher(
+						StringMatcher.CONTAINING));
+		return DefaultResult.newResult(configRepository.findAll(example, PageRequest.of(page, size)));
 	}
 
 	private void validate(Config config) {

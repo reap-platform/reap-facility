@@ -23,10 +23,9 @@
 
 package org.reap.facility.domain;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.mybatis.repository.support.MybatisRepository;
 
-public interface ConfigRepository extends JpaRepository<Config, String>, JpaSpecificationExecutor<Config> {
+public interface ConfigRepository extends MybatisRepository<Config, String> {
 
 	boolean existsBySystemCodeAndProfileAndLabelAndName(String systemCode, String profile, String label, String name);
 }

@@ -1,3 +1,8 @@
+spring: 
+  data:
+    jpa:
+      enabled: false
+      
 eureka:
   server:
     enableSelfPreservation: false

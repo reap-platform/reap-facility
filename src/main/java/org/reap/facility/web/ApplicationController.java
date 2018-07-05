@@ -27,17 +27,21 @@ import java.util.List;
 
 import org.reap.facility.common.Constants;
 import org.reap.facility.common.ErrorCodes;
+import org.reap.facility.common.Fields;
 import org.reap.facility.domain.Application;
 import org.reap.facility.domain.ApplicationRepository;
-import org.reap.facility.vo.QueryApplicationSpec;
 import org.reap.facility.vo.application.RuntimeInformation;
 import org.reap.support.DefaultResult;
 import org.reap.support.Result;
 import org.reap.util.Assert;
 import org.reap.util.FunctionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -174,9 +178,11 @@ public class ApplicationController {
 	 */
 	@RequestMapping(path = "/applications", method = RequestMethod.GET)
 	public Result<Page<Application>> find(@RequestParam(defaultValue = Constants.DEFAULT_PAGE_NUMBER) int page,
-			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, QueryApplicationSpec spec) {
-		Page<Application> applicationPage = applicationRepository.findAll(spec.toSpecification(),
-				PageRequest.of(page, size));
+			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, Application application) {
+		Example<Application> example = Example.of(application,
+				ExampleMatcher.matching().withIgnoreNullValues().withStringMatcher(StringMatcher.CONTAINING));
+		PageRequest  pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, Fields.SYSTEM_CODE));
+		Page<Application> applicationPage = applicationRepository.findAll(example,pageRequest);
 
 		if (discoveryClient != null) {
 			Applications applications = discoveryClient.getApplications();
