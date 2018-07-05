@@ -52,6 +52,6 @@ public class ApplicationRepositoryTest{
 	 */
 	@Test
 	public void testExistsByNameOrSystemCode() {
-		assertTrue(applicationRepository.existsByNameOrSystemCode("用户管理服务",null));
+		assertTrue(applicationRepository.existsByNameOrSystemCode("用户管理服务","reap-facility"));
 	}
 }
