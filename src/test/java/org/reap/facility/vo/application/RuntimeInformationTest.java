@@ -37,7 +37,7 @@ import static org.junit.Assert.*;
 public class RuntimeInformationTest {
 
 	/**
-	 * Test method for {@link org.reap.facility.vo.application.RuntimeInformation#getStatus()}.
+	 * Test method for {@link org.reap.facility.vo.RuntimeInformation#getStatus()}.
 	 */
 	@Test
 	public void testGetStatus() {

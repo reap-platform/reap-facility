@@ -32,7 +32,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.reap.facility.vo.application.RuntimeInformation;
+import org.reap.facility.vo.RuntimeInformation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;

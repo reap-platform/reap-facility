@@ -30,7 +30,7 @@ import org.reap.facility.common.ErrorCodes;
 import org.reap.facility.common.Fields;
 import org.reap.facility.domain.Application;
 import org.reap.facility.domain.ApplicationRepository;
-import org.reap.facility.vo.application.RuntimeInformation;
+import org.reap.facility.vo.RuntimeInformation;
 import org.reap.support.DefaultResult;
 import org.reap.support.Result;
 import org.reap.util.Assert;
@@ -180,7 +180,7 @@ public class ApplicationController {
 	public Result<Page<Application>> find(@RequestParam(defaultValue = Constants.DEFAULT_PAGE_NUMBER) int page,
 			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE) int size, Application application) {
 		Example<Application> example = Example.of(application,
-				ExampleMatcher.matching().withIgnoreNullValues().withStringMatcher(StringMatcher.CONTAINING));
+				ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues().withStringMatcher(StringMatcher.CONTAINING));
 		PageRequest  pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, Fields.SYSTEM_CODE));
 		Page<Application> applicationPage = applicationRepository.findAll(example,pageRequest);
 

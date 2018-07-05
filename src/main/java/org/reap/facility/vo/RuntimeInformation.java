@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.reap.facility.vo.application;
+package org.reap.facility.vo;
 
 import java.util.ArrayList;
 import java.util.Date;
