@@ -24,8 +24,12 @@
 package org.reap.facility.domain;
 
 import org.junit.Test;
-import org.reap.BaseTest;
+import org.junit.runner.RunWith;
+import org.reap.TestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
@@ -35,7 +39,10 @@ import static org.junit.Assert.*;
  * @author 7cat
  * @since 1.0
  */
-public class ApplicationRepositoryTest extends BaseTest{
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestConfig.class)
+@Transactional
+public class ApplicationRepositoryTest{
 
 	@Autowired
 	private ApplicationRepository applicationRepository;
