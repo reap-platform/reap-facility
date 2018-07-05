@@ -56,6 +56,8 @@ public class BootstrapConfiguration {
 		dataSource.setUsername(environment.getProperty("reap-config.datasource.username"));
 		dataSource.setPassword(environment.getProperty("reap-config.datasource.password"));
 		dataSource.setDriverClassName(environment.getProperty("reap-config.datasource.driver-class-name"));
+		dataSource.setConnectionTestQuery(environment.getProperty("reap-config.datasource.connection-test-query"));
+		
 		String configSql = environment.getProperty("reap-config.jdbc.sql");
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
