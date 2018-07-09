@@ -31,7 +31,6 @@ import org.reap.facility.common.Fields;
 import org.reap.facility.domain.Application;
 import org.reap.facility.domain.ApplicationRepository;
 import org.reap.facility.vo.RuntimeInformation;
-import org.reap.support.DefaultResult;
 import org.reap.support.Result;
 import org.reap.util.Assert;
 import org.reap.util.FunctionalUtils;
@@ -90,7 +89,7 @@ public class ApplicationController {
 	@RequestMapping(path = "/application", method = RequestMethod.POST)
 	public Result<Application> create(@RequestBody Application application) {
 		validate(application);
-		return DefaultResult.newResult(applicationRepository.save(application));
+		return Result.newResult(applicationRepository.save(application));
 	}
 
 	/**
@@ -106,7 +105,7 @@ public class ApplicationController {
 	@RequestMapping(path = "/application/{id}", method = RequestMethod.DELETE)
 	public Result<?> delete(@PathVariable String id) {
 		applicationRepository.deleteById(id);
-		return DefaultResult.newResult();
+		return Result.newResult();
 	}
 
 	/**
@@ -138,7 +137,7 @@ public class ApplicationController {
 		persisted.setOwner(application.getOwner());
 		persisted.setRemark(application.getRemark());
 		persisted.setSystemCode(application.getSystemCode());
-		return DefaultResult.newResult(applicationRepository.save(persisted));
+		return Result.newResult(applicationRepository.save(persisted));
 	}
 
 	/**
@@ -190,7 +189,7 @@ public class ApplicationController {
 				app.setInformation(new RuntimeInformation(applications.getRegisteredApplications(app.getSystemCode())));
 			});
 		}
-		return DefaultResult.newResult(applicationPage);
+		return Result.newResult(applicationPage);
 	}
 
 	/**
@@ -211,7 +210,7 @@ public class ApplicationController {
 	 */
 	@RequestMapping(path = "/applications/all", method = RequestMethod.GET)
 	public Result<List<Application>> findAll() {
-		return DefaultResult.newResult(applicationRepository.findAll());
+		return Result.newResult(applicationRepository.findAll());
 	}
 
 	private void validate(Application application) {

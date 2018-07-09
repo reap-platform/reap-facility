@@ -27,7 +27,6 @@ import org.reap.facility.common.Constants;
 import org.reap.facility.common.ErrorCodes;
 import org.reap.facility.domain.Config;
 import org.reap.facility.domain.ConfigRepository;
-import org.reap.support.DefaultResult;
 import org.reap.support.Result;
 import org.reap.util.Assert;
 import org.reap.util.FunctionalUtils;
@@ -83,7 +82,7 @@ public class ConfigController {
 	@RequestMapping(path = "/config", method = RequestMethod.POST)
 	public Result<Config> create(@RequestBody Config config) {
 		validate(config);
-		return DefaultResult.newResult(configRepository.save(config));
+		return Result.newResult(configRepository.save(config));
 	}
 
 	/**
@@ -99,7 +98,7 @@ public class ConfigController {
 	@RequestMapping(path = "/config/{id}", method = RequestMethod.DELETE)
 	public Result<?> delete(@PathVariable String id) {
 		configRepository.deleteById(id);
-		return DefaultResult.newResult();
+		return Result.newResult();
 	}
 
 	/**
@@ -135,7 +134,7 @@ public class ConfigController {
 		persisted.setName(config.getName());
 		persisted.setValue(config.getValue());
 		persisted.setRemark(config.getRemark());
-		return DefaultResult.newResult(configRepository.save(persisted));
+		return Result.newResult(configRepository.save(persisted));
 	}
 
 	/**
@@ -172,7 +171,7 @@ public class ConfigController {
 		Example<Config> example = Example.of(config,
 				ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues().withStringMatcher(
 						StringMatcher.CONTAINING));
-		return DefaultResult.newResult(configRepository.findAll(example, PageRequest.of(page, size)));
+		return Result.newResult(configRepository.findAll(example, PageRequest.of(page, size)));
 	}
 
 	private void validate(Config config) {

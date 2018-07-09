@@ -27,7 +27,6 @@ import org.reap.facility.common.Constants;
 import org.reap.facility.common.ErrorCodes;
 import org.reap.facility.domain.Route;
 import org.reap.facility.domain.RouteRepository;
-import org.reap.support.DefaultResult;
 import org.reap.support.Result;
 import org.reap.util.Assert;
 import org.reap.util.FunctionalUtils;
@@ -80,7 +79,7 @@ public class RouteController {
 	@RequestMapping(path = "/route", method = RequestMethod.POST)
 	public Result<Route> create(@RequestBody Route route) {
 		validate(route);
-		return DefaultResult.newResult(routeRepository.save(route));
+		return Result.newResult(routeRepository.save(route));
 	}
 
 	/**
@@ -96,7 +95,7 @@ public class RouteController {
 	@RequestMapping(path = "/route/{id}", method = RequestMethod.DELETE)
 	public Result<?> delete(@PathVariable String id) {
 		routeRepository.deleteById(id);
-		return DefaultResult.newResult();
+		return Result.newResult();
 	}
 
 	/**
@@ -128,7 +127,7 @@ public class RouteController {
 		persisted.setSystemCode(route.getSystemCode());
 		persisted.setUrl(route.getUrl());
 		persisted.setStripPrefix(route.getStripPrefix());
-		return DefaultResult.newResult(routeRepository.save(persisted));
+		return Result.newResult(routeRepository.save(persisted));
 	}
 
 	/**
@@ -163,7 +162,7 @@ public class RouteController {
 		Example<Route> example = Example.of(route,
 				ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues().withStringMatcher(
 						StringMatcher.CONTAINING));
-		return DefaultResult.newResult(routeRepository.findAll(example, PageRequest.of(page, size)));
+		return Result.newResult(routeRepository.findAll(example, PageRequest.of(page, size)));
 	}
 
 	private void validate(Route route) {
