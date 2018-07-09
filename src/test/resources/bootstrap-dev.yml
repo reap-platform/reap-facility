@@ -4,6 +4,9 @@ spring:
   cloud:
     config:
       enabled: false
+    refresh:
+      refreshable: none      
+      
 reap:
   config:
     enabled: false

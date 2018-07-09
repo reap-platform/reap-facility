@@ -23,12 +23,9 @@
 
 package org.reap.facility.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * REAP 路由配置实体.
@@ -40,23 +37,19 @@ import org.hibernate.annotations.GenericGenerator;
 public class Route {
 
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	@GeneratedValue
 	private String id;
 
-	@Column(nullable = false, unique = true)
 	/**
 	 * The router name, e.g. reap-rbac.
 	 */
 	private String name;
 
-	@Column(nullable = false, unique = true)
 	/**
 	 * The path (pattern) for the route, e.g. /foo/**.
 	 */
 	private String path;
 
-	@Column(nullable = false)
 	/**
 	 * The service ID (if any) to map to this route. You can specify a physical URL or a service, but not both.
 	 */
