@@ -26,6 +26,9 @@ package org.reap.facility.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.reap.facility.common.Constants;
 
 /**
  * REAP 平台参数配置实体.
@@ -34,6 +37,7 @@ import javax.persistence.Id;
  * @since 1.0
  */
 @Entity
+@Table(schema=Constants.FACILITY_SCHEMA)
 public class Config {
 
 	@Id

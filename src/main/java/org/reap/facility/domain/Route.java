@@ -26,6 +26,9 @@ package org.reap.facility.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.reap.facility.common.Constants;
 
 /**
  * REAP 路由配置实体.
@@ -34,6 +37,7 @@ import javax.persistence.Id;
  *
  */
 @Entity
+@Table(schema=Constants.FACILITY_SCHEMA)
 public class Route {
 
 	@Id

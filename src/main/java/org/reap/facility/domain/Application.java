@@ -28,10 +28,12 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.reap.facility.common.Constants;
 import org.reap.facility.vo.RuntimeInformation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -43,6 +45,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
  * @since 1.0
  */
 @Entity
+@Table(schema=Constants.FACILITY_SCHEMA)
 public class Application {
 
 	@Id
