@@ -64,6 +64,7 @@ public class ApplicationController {
 	@Autowired
 	private ApplicationRepository applicationRepository;
 
+	
 	/** @apiDefine Application 应用维护 */
 
 	/**
